@@ -20,6 +20,7 @@ canvas{display:block;width:100%;max-width:430px;margin:auto;background:#090c10;b
 button{border:1px solid #353d49;background:#232a34;color:#fff;border-radius:11px;min-height:48px;font-size:16px;font-weight:750;touch-action:manipulation}
 button:active{transform:translateY(1px)}
 .primary{background:#3769d8}.submit{background:#24784b;padding:0 18px}.clear{padding:0 14px}
+.feedback{display:none;width:100%;min-height:48px;margin-bottom:12px;border:1px solid #66522b;background:#b87918;color:#fff;border-radius:11px;font-size:16px;font-weight:800;text-decoration:none;align-items:center;justify-content:center}
 .status{max-width:430px;margin:10px auto 0;text-align:center;color:#b7c0cb;min-height:46px;font-size:14px;line-height:1.45}
 .selection{max-width:430px;margin:7px auto 0;color:#9da8b6;font-size:13px;display:flex;justify-content:space-between;gap:8px}
 .next{font-size:34px;font-weight:850;margin:4px 0 12px}
@@ -52,6 +53,7 @@ button:active{transform:translateY(1px)}
 <aside class="card side">
 <div class="low">NEXT ATOM</div><div id="next" class="next">—</div>
 <button id="restart" class="primary" style="width:100%;margin-bottom:12px">게임 시작 / 다시 시작</button>
+<a id="feedback" class="feedback" href="https://www.jotform.com/262582608605057" target="_blank" rel="noopener">⭐ 사용 후기 남기기</a>
 <b>분자 도감</b>
 <div id="recipes"></div>
 <div class="legend">
@@ -106,6 +108,7 @@ function sig(o){return Object.keys(o).sort().map(function(k){return k+":"+o[k];}
 function reset(){
  clearInterval(timer);
  board=emptyBoard(); selected={}; score=0; made=0; combo=1; playing=true; next=randAtom();
+ document.getElementById("feedback").style.display="none";
  spawn(); updateUI(); draw();
  document.getElementById("status").textContent="원자를 쌓고 필요한 블록을 탭해서 분자를 만들어봐.";
  timer=setInterval(function(){move(0,1);},700);
@@ -114,7 +117,8 @@ function spawn(){
  piece={c:2,r:0,a:next}; next=randAtom(); document.getElementById("next").textContent=next;
  if(board[0][piece.c]){
    playing=false; piece=null; clearInterval(timer);
-   document.getElementById("status").textContent="GAME OVER — 다시 시작해서 기록을 갱신해봐.";
+   document.getElementById("status").textContent="GAME OVER — 기록을 확인하고 사용 후기를 남겨줘!";
+   document.getElementById("feedback").style.display="flex";
  }
 }
 function free(c,r){return c>=0&&c<COL&&r>=0&&r<ROW&&!board[r][c];}
