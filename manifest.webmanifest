@@ -1,0 +1,23 @@
+{
+  "name": "Carbon Drop",
+  "short_name": "Carbon Drop",
+  "description": "탄소화합물 낙하 학습 게임",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#eaf7fb",
+  "theme_color": "#23a6c4",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

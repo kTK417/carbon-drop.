@@ -4,226 +4,56 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Carbon Drop</title>
+
+<meta name="theme-color" content="#23a6c4">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Carbon Drop">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="./icon-192.png">
+
 <style>
-:root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#eef2f6;background:#0f1217}
-*{box-sizing:border-box}
-body{margin:0;background:#0f1217}
-.wrap{max-width:980px;margin:auto;padding:16px}
-header{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
-h1{font-size:23px;margin:0}.sub{font-size:13px;color:#9da8b6;margin-top:3px}
-.stats{display:flex;gap:14px;font-size:14px}
-.layout{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:16px;margin-top:14px}
-.card{background:#171b22;border:1px solid #2a313c;border-radius:15px;padding:12px}
-canvas{display:block;width:100%;max-width:430px;margin:auto;background:#090c10;border-radius:11px;touch-action:manipulation}
-.controls{max-width:430px;margin:10px auto 0;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.actions{max-width:430px;margin:8px auto 0;display:grid;grid-template-columns:1fr auto;gap:8px}
-button{border:1px solid #353d49;background:#232a34;color:#fff;border-radius:11px;min-height:48px;font-size:16px;font-weight:750;touch-action:manipulation}
-button:active{transform:translateY(1px)}
-.primary{background:#3769d8}.submit{background:#24784b;padding:0 18px}.clear{padding:0 14px}
-.feedback{display:none;width:100%;min-height:48px;margin-bottom:12px;border:1px solid #66522b;background:#b87918;color:#fff;border-radius:11px;font-size:16px;font-weight:800;text-decoration:none;align-items:center;justify-content:center}
-.status{max-width:430px;margin:10px auto 0;text-align:center;color:#b7c0cb;min-height:46px;font-size:14px;line-height:1.45}
-.selection{max-width:430px;margin:7px auto 0;color:#9da8b6;font-size:13px;display:flex;justify-content:space-between;gap:8px}
-.next{font-size:34px;font-weight:850;margin:4px 0 12px}
-.recipe{padding:7px 0;border-bottom:1px solid #29303a;font-size:14px}.recipe:last-child{border:0}
-.tag{font-size:11px;border-radius:999px;background:#293a5d;color:#d8e4ff;padding:2px 6px;margin-left:4px}
-.low{color:#8fa0af;font-size:12px}.tip{font-size:13px;color:#aeb7c4;line-height:1.55;margin-top:12px}
-.legend{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px;font-size:12px;color:#aeb7c4}
-.dot{display:inline-flex;align-items:center;gap:4px}.sw{width:12px;height:12px;border-radius:3px;display:inline-block}
-@media(max-width:720px){.layout{grid-template-columns:1fr}.wrap{padding:10px}.card{border-radius:12px}.side{order:2}}
+:root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#0f172a;background:#eaf7fb}*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#dff6fb 0%,#f8fbfd 45%,#fff 100%);min-height:100vh}.wrap{max-width:980px;margin:auto;padding:14px}header{background:linear-gradient(135deg,#23a6c4,#4ec0d6);color:#fff;border-radius:22px;padding:18px;box-shadow:0 10px 30px rgba(35,166,196,.22)}.headrow{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap}h1{font-size:28px;line-height:1;margin:0 0 6px}.sub{font-size:13px;opacity:.9}.stats{display:flex;gap:10px;flex-wrap:wrap}.pill{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.25);padding:7px 10px;border-radius:999px;font-size:13px}.howto{margin-top:13px;background:rgba(255,255,255,.16);padding:10px 12px;border-radius:14px;font-size:13px;line-height:1.45}.layout{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:14px;margin-top:14px}.card{background:#fff;border:1px solid #d9edf2;border-radius:20px;padding:12px;box-shadow:0 8px 22px rgba(42,103,116,.08)}.boardwrap{background:#0f172a;border-radius:18px;padding:10px}canvas{display:block;width:100%;max-width:430px;margin:auto;background:#0b1220;border-radius:14px;touch-action:manipulation}.controls{max-width:430px;margin:10px auto 0;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}button{border:0;background:#e8f3f7;color:#16323b;border-radius:14px;min-height:50px;font-size:17px;font-weight:800;box-shadow:0 3px 0 rgba(14,68,78,.08)}button:active{transform:translateY(1px)}.primary{background:#22a7c1;color:#fff}.clear{background:#f1f5f9;color:#475569;width:100%;max-width:430px;display:block;margin:8px auto 0}.status{max-width:430px;margin:10px auto 0;text-align:center;min-height:44px;padding:10px 12px;background:#f4fbfd;border:1px solid #d9eef3;border-radius:14px;color:#36515a;font-size:13px;line-height:1.4}.selection{max-width:430px;margin:8px auto 0;padding:10px 12px;background:#fff8d9;border:1px solid #f4e2a4;border-radius:14px;color:#5f4c00;font-size:13px}.nextbox{display:flex;align-items:center;justify-content:space-between;background:#f3fbfd;padding:10px 12px;border-radius:14px;margin-bottom:10px}.next{font-size:34px;font-weight:900;color:#174752}.recipe{padding:8px 0;border-bottom:1px solid #edf3f5;font-size:13px}.recipe:last-child{border-bottom:0}.tag{font-size:10px;border-radius:999px;background:#dff1ff;color:#1e4e7a;padding:2px 6px;margin-left:4px}.low{font-size:11px;color:#80909a;margin-top:2px}.side h3{margin:2px 0 8px}.tip{font-size:12px;color:#64748b;line-height:1.55;background:#f8fafc;padding:10px;border-radius:12px;margin-top:10px}.legend{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;font-size:12px;color:#52606d}.sw{width:11px;height:11px;border-radius:3px;display:inline-block;margin-right:3px}@media(max-width:720px){.layout{grid-template-columns:1fr}.wrap{padding:10px}header{border-radius:18px;padding:16px}.side{order:2}}
 </style>
 </head>
 <body>
 <main class="wrap">
-<header>
-<div><h1>Carbon Drop</h1><div class="sub">탄소화합물 낙하 퍼즐 · 선택해서 분자를 완성하자</div></div>
-<div class="stats"><span>SCORE <b id="score">0</b></span><span>완성 <b id="made">0</b></span><span>COMBO <b id="combo">×1</b></span></div>
-</header>
+<header><div class="headrow"><div><h1>Carbon Drop</h1><div class="sub">탄소화합물 낙하 학습 게임</div></div><div class="stats"><span class="pill">SCORE <b id="score">0</b></span><span class="pill">완성 <b id="made">0</b></span><span class="pill">COMBO <b id="combo">×1</b></span></div></div><div class="howto"><b>플레이 방법</b> · 원자를 떨어뜨리고 아래에 쌓인 원자를 탭해서 선택해. <b>정확한 분자 조합이 되면 자동으로 완성!</b></div></header>
 <div class="layout">
-<section>
-<div class="card"><canvas id="game" width="360" height="480" aria-label="탄소화합물 낙하 퍼즐"></canvas></div>
-<div class="controls">
-<button id="left">←</button><button id="down">↓</button><button id="right">→</button><button id="drop" class="primary">DROP</button>
-</div>
-<div class="actions">
-<button id="submit" class="submit">🧪 분자 완성!</button><button id="clear" class="clear">선택 해제</button>
-</div>
-<div class="selection"><span>선택: <b id="selection">없음</b></span><span>쌓인 원자를 탭해서 선택</span></div>
-<div id="status" class="status">게임 시작을 누르면 원자가 자동으로 떨어져.</div>
-</section>
-<aside class="card side">
-<div class="low">NEXT ATOM</div><div id="next" class="next">—</div>
-<button id="restart" class="primary" style="width:100%;margin-bottom:12px">게임 시작 / 다시 시작</button>
-<a id="feedback" class="feedback" href="https://www.jotform.com/262582608605057" target="_blank" rel="noopener">⭐ 사용 후기 남기기</a>
-<b>분자 도감</b>
-<div id="recipes"></div>
-<div class="legend">
-<span class="dot"><i class="sw" style="background:#454b54"></i>C</span>
-<span class="dot"><i class="sw" style="background:#dfe3e8"></i>H</span>
-<span class="dot"><i class="sw" style="background:#b85656"></i>O</span>
-<span class="dot"><i class="sw" style="background:#568368"></i>Cl</span>
-</div>
-<p class="tip"><b>게임 규칙</b><br>
-분자는 자동으로 터지지 않아. 원하는 원자를 직접 선택한 뒤 <b>분자 완성!</b>을 눌러 제출해. H₂O와 CO₂는 판을 정리하기 위한 저득점 분자야. Cl은 희귀하게 등장해.</p>
-</aside>
-</div>
-</main>
+<section><div class="card"><div class="boardwrap"><canvas id="game" width="360" height="480"></canvas></div><div class="controls"><button id="left">←</button><button id="down">↓</button><button id="right">→</button><button id="drop" class="primary">DROP</button></div><button id="clear" class="clear">선택 초기화</button><div class="selection">현재 선택: <b id="selection">없음</b><br><span id="hint">원자를 선택하면 만들 수 있는 분자를 알려줄게.</span></div><div id="status" class="status">게임 시작을 누르면 원자가 자동으로 떨어져.</div></div></section>
+<aside class="card side"><div class="nextbox"><div><div class="low">NEXT ATOM</div><div id="next" class="next">—</div></div><button id="restart" class="primary" style="padding:0 14px">게임 시작</button></div><h3>분자 도감</h3><div id="recipes"></div><div class="balance" style="margin-top:10px;padding:10px;border-radius:12px;background:#f0fbf7;border:1px solid #d7f0e5;font-size:12px;line-height:1.5;color:#386455"><b>균형형 등장 시스템</b><br>H 45% · C 25% · O 20% · Cl 10% 비율을 한 묶음 안에서 유지하고, 같은 원소가 3연속 나오지 않도록 보정했어.</div><div class="legend"><span><i class="sw" style="background:#4b5563"></i>C</span><span><i class="sw" style="background:#f3f4f6;border:1px solid #cbd5e1"></i>H</span><span><i class="sw" style="background:#ef6b6b"></i>O</span><span><i class="sw" style="background:#64a47d"></i>Cl</span></div><p class="tip"><b>개선된 조작</b><br>원자를 선택한 뒤 별도의 “분자 완성” 버튼을 누를 필요가 없어. 선택한 원자 수가 등록된 분자와 정확히 일치하면 즉시 완성돼.</p></aside>
+</div></main>
 <script>
-(function(){
-"use strict";
-var cv=document.getElementById("game"),ctx=cv.getContext("2d");
-var COL=6,ROW=8,CW=60,CH=60;
-var board=[],piece=null,next="H",score=0,made=0,combo=1,playing=false,timer=null,selected={};
-
-var recipes=[
- [{H:2,O:1},"H₂O","물",40,"처리용"],
- [{C:1,O:2},"CO₂","이산화 탄소",50,"처리용"],
- [{C:1,H:4},"CH₄","메테인",100,""],
- [{C:2,H:6},"C₂H₆","에테인",180,""],
- [{C:2,H:2},"C₂H₂","에타인",220,""],
- [{C:2,H:4},"C₂H₄","에틸렌(에텐)",300,"PE 단위체"],
- [{C:1,H:2,O:1},"CH₂O","폼알데하이드",240,""],
- [{C:1,H:4,O:1},"CH₄O","메탄올",260,""],
- [{C:2,H:6,O:1},"C₂H₆O","에탄올",380,""],
- [{C:3,H:6},"C₃H₆","프로필렌(프로펜)",420,"PP 단위체"],
- [{C:2,H:3,Cl:1},"C₂H₃Cl","염화 바이닐",500,"PVC 단위체"]
-];
-
-var recipeBox=document.getElementById("recipes");
-recipes.forEach(function(r){
- var d=document.createElement("div"); d.className="recipe";
- d.innerHTML="<b>"+r[1]+"</b> · "+r[2]+(r[4]?" <span class='tag'>"+r[4]+"</span>":"")+"<div class='low'>+"+r[3]+"점</div>";
- recipeBox.appendChild(d);
-});
-
-// Approx. H 50%, C 30%, O 15%, Cl 5%
-var bag=["H","H","H","H","H","H","H","H","H","H",
-         "C","C","C","C","C","C",
-         "O","O","O",
-         "Cl"];
-
-function randAtom(){return bag[Math.floor(Math.random()*bag.length)];}
-function emptyBoard(){return Array.from({length:ROW},function(){return Array(COL).fill(null);});}
-function sig(o){return Object.keys(o).sort().map(function(k){return k+":"+o[k];}).join("|");}
-
-function reset(){
- clearInterval(timer);
- board=emptyBoard(); selected={}; score=0; made=0; combo=1; playing=true; next=randAtom();
- document.getElementById("feedback").style.display="none";
- spawn(); updateUI(); draw();
- document.getElementById("status").textContent="원자를 쌓고 필요한 블록을 탭해서 분자를 만들어봐.";
- timer=setInterval(function(){move(0,1);},700);
+(function(){"use strict";var cv=document.getElementById("game"),ctx=cv.getContext("2d"),COL=6,ROW=8,CW=60,CH=60,board=[],piece=null,next="H",score=0,made=0,combo=1,playing=false,timer=null,selected={};var recipes=[[{H:2,O:1},"H₂O","물 / Water",40,"처리용"],[{C:1,O:2},"CO₂","이산화 탄소 / Carbon dioxide",50,"처리용"],
+ [{H:1,Cl:1},"HCl","염화 수소 / Hydrogen chloride",60,"처리용"],[{C:1,H:4},"CH₄","메테인 / Methane",100,""],[{C:2,H:6},"C₂H₆","에테인 / Ethane",180,""],[{C:2,H:2},"C₂H₂","에타인 / Ethyne",220,""],[{C:2,H:4},"C₂H₄","에텐 / Ethene",300,"PE 단위체"],[{C:1,H:2,O:1},"CH₂O","폼알데하이드 / Formaldehyde",240,""],[{C:1,H:4,O:1},"CH₄O","메탄올 / Methanol",260,""],[{C:2,H:6,O:1},"C₂H₆O","에탄올 / Ethanol",380,""],[{C:3,H:6},"C₃H₆","프로펜 / Propene",420,"PP 단위체"],[{C:2,H:3,Cl:1},"C₂H₃Cl","염화 바이닐 / Vinyl chloride",500,"PVC 단위체"]];var box=document.getElementById("recipes");recipes.forEach(function(r){var d=document.createElement("div");d.className="recipe";d.innerHTML="<b>"+r[1]+"</b> · "+r[2]+(r[4]?" <span class='tag'>"+r[4]+"</span>":"")+"<div class='low'>+"+r[3]+"점</div>";box.appendChild(d)});var atomBag=[],lastAtoms=[];
+function shuffled(arr){
+ var a=arr.slice();
+ for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}
+ return a;
 }
-function spawn(){
- piece={c:2,r:0,a:next}; next=randAtom(); document.getElementById("next").textContent=next;
- if(board[0][piece.c]){
-   playing=false; piece=null; clearInterval(timer);
-   document.getElementById("status").textContent="GAME OVER — 기록을 확인하고 사용 후기를 남겨줘!";
-   document.getElementById("feedback").style.display="flex";
+function refillBag(){
+ atomBag=shuffled(["H","H","H","H","H","H","H","H","H","C","C","C","C","C","O","O","O","O","Cl","Cl"]);
+}
+function randAtom(){
+ if(atomBag.length===0) refillBag();
+ if(lastAtoms.length>=2 && lastAtoms[lastAtoms.length-1]===lastAtoms[lastAtoms.length-2]){
+   var blocked=lastAtoms[lastAtoms.length-1],idx=-1;
+   for(var i=0;i<atomBag.length;i++){if(atomBag[i]!==blocked){idx=i;break;}}
+   if(idx>0){var t=atomBag[0];atomBag[0]=atomBag[idx];atomBag[idx]=t;}
  }
-}
-function free(c,r){return c>=0&&c<COL&&r>=0&&r<ROW&&!board[r][c];}
-function move(dc,dr){
- if(!playing||!piece)return;
- if(free(piece.c+dc,piece.r+dr)){piece.c+=dc;piece.r+=dr;}
- else if(dr>0){lock();}
- draw();
-}
-function hardDrop(){
- if(!playing||!piece)return;
- while(free(piece.c,piece.r+1))piece.r++;
- lock(); draw();
-}
-function lock(){
- board[piece.r][piece.c]=piece.a; piece=null; spawn(); updateUI();
-}
-function collapse(){
- for(var c=0;c<COL;c++){
-   var vals=[];
-   for(var r=ROW-1;r>=0;r--)if(board[r][c])vals.push(board[r][c]);
-   for(var rr=ROW-1,i=0;rr>=0;rr--,i++)board[rr][c]=vals[i]||null;
- }
-}
-function submitMolecule(){
- if(!playing)return;
- var keys=Object.keys(selected);
- if(!keys.length){document.getElementById("status").textContent="먼저 쌓인 원자를 선택해.";return;}
- var counts={};
- keys.forEach(function(k){
-   var p=k.split(","),c=+p[0],r=+p[1],a=board[r]&&board[r][c];
-   if(a)counts[a]=(counts[a]||0)+1;
- });
- var hit=null;
- for(var i=0;i<recipes.length;i++){if(sig(recipes[i][0])===sig(counts)){hit=recipes[i];break;}}
- if(!hit){
-   combo=1; selected={}; updateUI(); draw();
-   document.getElementById("status").textContent="❌ 등록된 분자 조합이 아니야. 다시 골라봐.";
-   return;
- }
- var gain=hit[3]*combo;
- keys.forEach(function(k){var p=k.split(","),c=+p[0],r=+p[1];if(board[r])board[r][c]=null;});
- score+=gain; made++;
- document.getElementById("status").innerHTML="💥 <b>"+hit[1]+" "+hit[2]+"</b> 완성! +"+gain+"점"+(hit[4]&&hit[4]!=="처리용"?" · "+hit[4]:"");
- combo=Math.min(combo+1,9); selected={}; collapse(); updateUI(); draw();
-}
-function clearSelection(){selected={};updateUI();draw();}
-function updateUI(){
- document.getElementById("score").textContent=score;
- document.getElementById("made").textContent=made;
- document.getElementById("combo").textContent="×"+combo;
- var counts={};
- Object.keys(selected).forEach(function(k){
-   var p=k.split(","),a=board[+p[1]]&&board[+p[1]][+p[0]];
-   if(a)counts[a]=(counts[a]||0)+1;
- });
- var s=Object.keys(counts).sort().map(function(a){return a+(counts[a]>1?"×"+counts[a]:"");}).join(" + ");
- document.getElementById("selection").textContent=s||"없음";
-}
-function colors(a){
- if(a==="C")return ["#454b54","#fff"];
- if(a==="H")return ["#dfe3e8","#202327"];
- if(a==="O")return ["#b85656","#fff"];
- return ["#568368","#fff"];
-}
-function tile(c,r,a,fall,sel){
- var px=c*CW+5,py=r*CH+5,co=colors(a);
- ctx.fillStyle=co[0];ctx.beginPath();ctx.roundRect(px,py,50,50,10);ctx.fill();
- if(fall||sel){ctx.strokeStyle=sel?"#ffd54a":"#fff";ctx.lineWidth=sel?5:3;ctx.stroke();}
- ctx.fillStyle=co[1];ctx.font=a==="Cl"?"bold 19px system-ui":"bold 23px system-ui";
- ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText(a,px+25,py+25);
-}
-function draw(){
- ctx.fillStyle="#090c10";ctx.fillRect(0,0,360,480);
- ctx.strokeStyle="#252b34";ctx.lineWidth=1;
- for(var c=1;c<COL;c++){ctx.beginPath();ctx.moveTo(c*CW,0);ctx.lineTo(c*CW,480);ctx.stroke();}
- for(var r=1;r<ROW;r++){ctx.beginPath();ctx.moveTo(0,r*CH);ctx.lineTo(360,r*CH);ctx.stroke();}
- for(var rr=0;rr<ROW;rr++)for(var cc=0;cc<COL;cc++)if(board[rr][cc])tile(cc,rr,board[rr][cc],false,!!selected[cc+","+rr]);
- if(piece)tile(piece.c,piece.r,piece.a,true,false);
- if(!playing&&score>0){ctx.fillStyle="rgba(0,0,0,.58)";ctx.fillRect(0,0,360,480);ctx.fillStyle="#fff";ctx.font="bold 30px system-ui";ctx.textAlign="center";ctx.fillText("GAME OVER",180,240);}
-}
-cv.addEventListener("pointerdown",function(e){
- if(!playing)return;
- var rect=cv.getBoundingClientRect();
- var c=Math.floor(((e.clientX-rect.left)*cv.width/rect.width)/CW);
- var r=Math.floor(((e.clientY-rect.top)*cv.height/rect.height)/CH);
- if(c<0||c>=COL||r<0||r>=ROW||!board[r][c])return;
- var k=c+","+r; if(selected[k])delete selected[k];else selected[k]=true;
- updateUI();draw();
-});
-document.getElementById("left").addEventListener("click",function(){move(-1,0);});
-document.getElementById("right").addEventListener("click",function(){move(1,0);});
-document.getElementById("down").addEventListener("click",function(){move(0,1);});
-document.getElementById("drop").addEventListener("click",hardDrop);
-document.getElementById("submit").addEventListener("click",submitMolecule);
-document.getElementById("clear").addEventListener("click",clearSelection);
-document.getElementById("restart").addEventListener("click",reset);
-document.addEventListener("keydown",function(e){
- if(e.key==="ArrowLeft")move(-1,0);
- else if(e.key==="ArrowRight")move(1,0);
- else if(e.key==="ArrowDown")move(0,1);
- else if(e.key===" "){e.preventDefault();hardDrop();}
-});
-board=emptyBoard();draw();
-})();
+ var atom=atomBag.shift();
+ lastAtoms.push(atom); if(lastAtoms.length>3) lastAtoms.shift();
+ return atom;
+}function rand(){return bag[Math.floor(Math.random()*bag.length)]}function empty(){return Array.from({length:ROW},function(){return Array(COL).fill(null)})}function sig(o){return Object.keys(o).sort().map(function(k){return k+":"+o[k]}).join("|")}function counts(){var x={};Object.keys(selected).forEach(function(k){var p=k.split(","),a=board[+p[1]]&&board[+p[1]][+p[0]];if(a)x[a]=(x[a]||0)+1});return x}function exact(x){var s=sig(x);for(var i=0;i<recipes.length;i++)if(sig(recipes[i][0])===s)return recipes[i];return null}function possible(x){return recipes.filter(function(r){for(var k in x)if((x[k]||0)>(r[0][k]||0))return false;return true})}function reset(){clearInterval(timer);board=empty();selected={};score=0;made=0;combo=1;playing=true;next=rand();spawn();ui();draw();document.getElementById("status").textContent="원자를 떨어뜨린 뒤 쌓인 블록을 탭해 분자를 만들어봐.";timer=setInterval(function(){move(0,1)},760)}function spawn(){piece={c:2,r:0,a:next};next=rand();document.getElementById("next").textContent=next;if(board[0][piece.c]){playing=false;piece=null;clearInterval(timer);document.getElementById("status").textContent="GAME OVER — 다시 시작해봐."}}function free(c,r){return c>=0&&c<COL&&r>=0&&r<ROW&&!board[r][c]}function move(dc,dr){if(!playing||!piece)return;if(free(piece.c+dc,piece.r+dr)){piece.c+=dc;piece.r+=dr}else if(dr>0)lock();draw()}function hard(){if(!playing||!piece)return;while(free(piece.c,piece.r+1))piece.r++;lock();draw()}function lock(){board[piece.r][piece.c]=piece.a;piece=null;spawn();ui()}function collapse(){for(var c=0;c<COL;c++){var v=[];for(var r=ROW-1;r>=0;r--)if(board[r][c])v.push(board[r][c]);for(var rr=ROW-1,i=0;rr>=0;rr--,i++)board[rr][c]=v[i]||null}}function complete(hit){var keys=Object.keys(selected),gain=hit[3]*combo;keys.forEach(function(k){var p=k.split(",");board[+p[1]][+p[0]]=null});score+=gain;made++;document.getElementById("status").innerHTML="✨ <b>"+hit[1]+" "+hit[2]+"</b> 자동 완성! +"+gain+"점"+(hit[4]&&hit[4]!=="처리용"?" · "+hit[4]:"");combo=Math.min(combo+1,9);selected={};collapse();ui();draw()}function ui(){document.getElementById("score").textContent=score;document.getElementById("made").textContent=made;document.getElementById("combo").textContent="×"+combo;var x=counts(),s=Object.keys(x).sort().map(function(a){return a+(x[a]>1?"×"+x[a]:"")}).join(" + ");document.getElementById("selection").textContent=s||"없음";var p=possible(x),h=document.getElementById("hint");if(!Object.keys(x).length)h.textContent="원자를 선택하면 만들 수 있는 분자를 알려줄게.";else if(p.length)h.textContent="가능: "+p.slice(0,4).map(function(r){return r[1]}).join(", ")+(p.length>4?" …":"");else h.textContent="이 조합으로 만들 수 있는 등록 분자가 없어. 선택을 줄여봐."}function col(a){return a==="C"?["#4b5563","#fff"]:a==="H"?["#f3f4f6","#111827"]:a==="O"?["#ef6b6b","#fff"]:["#64a47d","#fff"]}function rr(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()}function tile(c,r,a,fall,sel){var x=c*CW+6,y=r*CH+6,co=col(a);ctx.fillStyle=co[0];rr(x,y,48,48,12);ctx.fill();if(fall||sel){ctx.strokeStyle=sel?"#facc15":"#67e8f9";ctx.lineWidth=sel?5:3;rr(x,y,48,48,12);ctx.stroke()}ctx.fillStyle=co[1];ctx.font=a==="Cl"?"bold 18px system-ui":"bold 22px system-ui";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText(a,x+24,y+24)}function draw(){ctx.fillStyle="#0b1220";ctx.fillRect(0,0,360,480);ctx.strokeStyle="#1e293b";ctx.lineWidth=1;for(var c=1;c<COL;c++){ctx.beginPath();ctx.moveTo(c*CW,0);ctx.lineTo(c*CW,480);ctx.stroke()}for(var r=1;r<ROW;r++){ctx.beginPath();ctx.moveTo(0,r*CH);ctx.lineTo(360,r*CH);ctx.stroke()}for(var rr0=0;rr0<ROW;rr0++)for(var cc=0;cc<COL;cc++)if(board[rr0][cc])tile(cc,rr0,board[rr0][cc],false,!!selected[cc+","+rr0]);if(piece)tile(piece.c,piece.r,piece.a,true,false)}cv.addEventListener("pointerdown",function(e){if(!playing)return;var rect=cv.getBoundingClientRect(),c=Math.floor((e.clientX-rect.left)*cv.width/rect.width/CW),r=Math.floor((e.clientY-rect.top)*cv.height/rect.height/CH);if(c<0||c>=COL||r<0||r>=ROW||!board[r][c])return;var k=c+","+r;if(selected[k])delete selected[k];else selected[k]=true;ui();draw();var hit=exact(counts());if(hit)setTimeout(function(){complete(hit)},120)});document.getElementById("left").onclick=function(){move(-1,0)};document.getElementById("right").onclick=function(){move(1,0)};document.getElementById("down").onclick=function(){move(0,1)};document.getElementById("drop").onclick=hard;document.getElementById("clear").onclick=function(){selected={};ui();draw()};document.getElementById("restart").onclick=reset;board=empty();draw()})();
 </script>
+
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("./sw.js").catch(function () {});
+  });
+}
+</script>
+
 </body>
 </html>
